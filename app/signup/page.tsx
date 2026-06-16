@@ -79,12 +79,6 @@ function SignupForm() {
       <div className="absolute bottom-1/3 -left-32 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px]" />
 
       <div className="relative w-full max-w-md animate-fade-in-up">
-        {/* Logo */}
-        <Link href="/" className="flex items-center justify-center gap-2 mb-10">
-          <Film className="h-8 w-8 text-indigo-500" />
-          <span className="font-bold text-2xl tracking-tight">CineDash</span>
-        </Link>
-
         {/* Card */}
         <div className="glass rounded-2xl p-8 shadow-2xl shadow-indigo-500/5">
           <div className="text-center mb-8">

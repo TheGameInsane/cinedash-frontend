@@ -173,7 +173,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
       </div>
 
       {/* Movie content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-40 relative z-10 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-55 relative z-10 pb-16">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Poster */}
           <div className="flex-shrink-0 animate-fade-in-up">
