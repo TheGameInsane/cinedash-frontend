@@ -13,6 +13,7 @@ import Navbar from '@/components/Navbar';
 import { useAuth } from '@/lib/AuthContext';
 import MovieStreamingLinks from '@/components/MovieStremingLinks';
 import Rating from '@mui/material/Rating';
+import Casts from '@/components/CastComponent';
 
 // ===== Seasons & Episodes Component =====
 function SeasonsSection({ tvId, seasons }: { tvId: number; seasons: any[] }) {
@@ -203,7 +204,7 @@ export default function TvPage({ params }: { params: Promise<{ id: string }> }) 
   const [savingWatchlist, setSavingWatchlist] = useState(false);
 
   const tvId = parseInt(id, 10);
-  const isInWatchlist = user?.watchlist?.some(w => w.id === tvId && w.media_type === 'tv') || false;
+  const isInWatchlist = user?.watchlist?.some(w => w.id === tvId && w.type === 'tv') || false;
   const isInWatchHistory = user?.watchHistory?.some(w => w.id === tvId && w.type === 'tv') || false;
 
   useEffect(() => {
@@ -232,7 +233,7 @@ export default function TvPage({ params }: { params: Promise<{ id: string }> }) 
       if (isInWatchlist) {
         await removeFromWatchlist(tvId, 'tv');
       } else {
-        await addToWatchlist(tvId, 'tv');
+        await addToWatchlist(tvId, 'tv', tv.name, 'https://image.tmdb.org/t/p/w500' + tv.poster_path, tv.genre_ids);
       }
     } catch (err) {
       console.error('Watchlist error:', err);
@@ -496,35 +497,7 @@ export default function TvPage({ params }: { params: Promise<{ id: string }> }) 
 
         {/* Cast */}
         {cast.length > 0 && (
-          <section className="mt-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-6 bg-violet-500 rounded-full" />
-              Top Cast
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-4 stagger-children">
-              {cast.map((actor: any) => (
-                <div key={actor.id} className="text-center group">
-                  {actor.profile_path ? (
-                    <div className="w-full aspect-[2/3] rounded-xl overflow-hidden mb-2 bg-slate-800">
-                      <Image
-                        src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                        alt={actor.name}
-                        width={185}
-                        height={278}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-full aspect-[2/3] rounded-xl bg-slate-800/80 flex items-center justify-center mb-2">
-                      <Film className="h-8 w-8 text-slate-600" />
-                    </div>
-                  )}
-                  <p className="text-xs font-medium text-white truncate">{actor.name}</p>
-                  <p className="text-xs text-slate-500 truncate">{actor.character}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          <Casts cast={cast} />
         )}
 
         {/* Seasons & Episodes */}

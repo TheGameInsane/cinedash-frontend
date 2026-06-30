@@ -14,7 +14,10 @@ interface WatchHistoryEntry {
 
 interface WatchlistItem {
   id: number;
-  media_type: string; // 'movie' | 'tv'
+  type: string; // 'movie' | 'tv'
+  title: string;
+  poster: string;
+  genre: number[];
 }
 
 interface User {
@@ -36,8 +39,8 @@ interface AuthContextType {
   signup: (username: string, email: string, password: string, dateOfBirth: string) => Promise<void>;
   googleLogin: (googleToken: string) => Promise<void>;
   completeProfile: (dateOfBirth: string) => Promise<void>;
-  addToWatchlist: (mediaId: number, media_type: string) => Promise<void>;
-  removeFromWatchlist: (mediaId: number, media_type: string) => Promise<void>;
+  addToWatchlist: (mediaId: number, type: string, title: string, poster: string, genre: number[]) => Promise<void>;
+  removeFromWatchlist: (mediaId: number, type: string) => Promise<void>;
   addToWatchHistory: (mediaId: number, type: string, title: string, poster: string, genre: number[], rating: number) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -65,7 +68,7 @@ async function gqlRequest(query: string, variables: Record<string, any> = {}) {
 const USER_FIELDS = `
   id username email dateOfBirth profileComplete favoriteGenres
   watchHistory { id type title poster genre rating watchedAt }
-  watchlist { id media_type }
+  watchlist { id type title poster genre }
 `;
 
 const ME_QUERY = `
@@ -115,16 +118,16 @@ const COMPLETE_PROFILE_MUTATION = `
 `;
 
 const ADD_TO_WATCHLIST_MUTATION = `
-  mutation AddToWatchlist($mediaId: Int!, $media_type: String!) {
-    addToWatchlist(mediaId: $mediaId, media_type: $media_type) {
+  mutation AddToWatchlist($mediaId: Int!, $type: String!, $title: String!, $poster: String!, $genre: [Int!]) {
+    addToWatchlist(mediaId: $mediaId, type: $type, title: $title, poster: $poster, genre: $genre) {
       ${USER_FIELDS}
     }
   }
 `;
 
 const REMOVE_FROM_WATCHLIST_MUTATION = `
-  mutation RemoveFromWatchlist($mediaId: Int!, $media_type: String!) {
-    removeFromWatchlist(mediaId: $mediaId, media_type: $media_type) {
+  mutation RemoveFromWatchlist($mediaId: Int!, $type: String!) {
+    removeFromWatchlist(mediaId: $mediaId, type: $type) {
       ${USER_FIELDS}
     }
   }
@@ -184,15 +187,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(data.completeProfile);
   };
 
-  const addToWatchlist = async (mediaId: number, media_type: string) => {
+  const addToWatchlist = async (mediaId: number, type: string, title: string, poster: string, genre: number[]) => {
     if (!user) throw new Error('Not authenticated');
-    const data = await gqlRequest(ADD_TO_WATCHLIST_MUTATION, { mediaId, media_type });
+    const data = await gqlRequest(ADD_TO_WATCHLIST_MUTATION, { mediaId, type, title, poster, genre });
     setUser(data.addToWatchlist);
   };
 
-  const removeFromWatchlist = async (mediaId: number, media_type: string) => {
+  const removeFromWatchlist = async (mediaId: number, type: string) => {
     if (!user) throw new Error('Not authenticated');
-    const data = await gqlRequest(REMOVE_FROM_WATCHLIST_MUTATION, { mediaId, media_type });
+    const data = await gqlRequest(REMOVE_FROM_WATCHLIST_MUTATION, { mediaId, type });
     setUser(data.removeFromWatchlist);
   };
 

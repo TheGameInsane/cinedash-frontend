@@ -3,7 +3,6 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   ArrowLeft, Star, Clock, Calendar, Film, Globe,
   Bookmark, BookmarkCheck, CheckCircle, Plus, X,
@@ -13,6 +12,7 @@ import Navbar from '@/components/Navbar';
 import { useAuth } from '@/lib/AuthContext';
 import MovieStreamingLinks from '@/components/MovieStremingLinks';
 import Rating from '@mui/material/Rating';
+import Casts from '@/components/CastComponent';
 
 export default function MoviePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -29,7 +29,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
   const [savingWatchlist, setSavingWatchlist] = useState(false);
 
   const movieId = parseInt(id, 10);
-  const isInWatchlist = user?.watchlist?.some(w => w.id === movieId && w.media_type === 'movie') || false;
+  const isInWatchlist = user?.watchlist?.some(w => w.id === movieId && w.type === 'movie') || false;
   const isInWatchHistory = user?.watchHistory?.some(w => w.id === movieId && w.type === 'movie') || false;
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
       if (isInWatchlist) {
         await removeFromWatchlist(movieId, 'movie');
       } else {
-        await addToWatchlist(movieId, 'movie');
+        await addToWatchlist(movieId, 'movie', movie.title, 'https://image.tmdb.org/t/p/w500' + movie.poster_path, movie.genre_ids);
       }
     } catch (err) {
       console.error('Watchlist error:', err);
@@ -325,35 +325,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
 
         {/* Cast */}
         {cast.length > 0 && (
-          <section className="mt-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-6 bg-violet-500 rounded-full" />
-              Top Cast
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-4 stagger-children">
-              {cast.map((actor: any) => (
-                <div key={actor.id} className="text-center hover:cursor-pointer group" onClick={() => { router.push(`/person/${actor.id}`) }}>
-                  {actor.profile_path ? (
-                    <div className="w-full aspect-[2/3] rounded-xl overflow-hidden mb-2 bg-slate-800">
-                      <Image
-                        src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
-                        alt={actor.name}
-                        width={185}
-                        height={278}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-full aspect-[2/3] rounded-xl bg-slate-800/80 flex items-center justify-center mb-2">
-                      <Film className="h-8 w-8 text-slate-600" />
-                    </div>
-                  )}
-                  <p className="text-xs font-medium text-white truncate">{actor.name}</p>
-                  <p className="text-xs text-slate-500 truncate">{actor.character}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          <Casts cast={cast} />
         )}
 
         {/* Additional details */}

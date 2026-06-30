@@ -175,7 +175,7 @@ export default function Navbar() {
   return (
     <>
       {/* Floating Navbar Container */}
-      <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <div className="fixed top-4 left-0 right-0 z-100 flex justify-center px-4 pointer-events-none">
         <nav 
           className={`w-full max-w-7xl rounded-full transition-all duration-500 pointer-events-auto ${
             isScrolled 
@@ -183,7 +183,7 @@ export default function Navbar() {
               : 'bg-slate-900/40 backdrop-blur-xl border border-white/5'
           }`}
         >
-          <div className="px-4 sm:px-6 lg:px-8 md:h-16 h-12 flex items-center justify-between">
+          <div className="px-4 sm:px-6 lg:px-8 md:h-16 h-14 flex items-center justify-between">
             
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
@@ -248,8 +248,8 @@ export default function Navbar() {
                   </button>
 
                   {showUserMenu && (
-                    <div className="absolute right-0 top-full mt-3 w-56 glass rounded-2xl shadow-2xl py-2 animate-slide-down border border-white/10">
-                      <div className="px-4 py-3 border-b border-slate-700/50 bg-slate-800/30">
+                    <div className="absolute right-0 top-full mt-3 w-56 bg-slate-900 rounded-2xl shadow-2xl py-2 animate-slide-down border border-slate-700">
+                      <div className="px-4 py-3 border-b border-slate-700/50">
                         <p className="text-sm font-semibold text-white truncate">{user?.username}</p>
                         <p className="text-xs text-slate-400 truncate mt-0.5">{user?.email}</p>
                       </div>
@@ -311,7 +311,7 @@ export default function Navbar() {
 
       {/* Mobile menu panel */}
       {showMobileMenu && (
-        <div className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-2xl pt-24 pb-6 px-4 animate-fade-in flex flex-col md:hidden">
+        <div className="fixed inset-0 z-40 bg-slate-950/80 backdrop-blur-2xl pt-24 pb-6 px-4 animate-fade-in flex flex-col md:hidden">
           
           <div className="mb-8" ref={searchRef}>
             <form onSubmit={handleSearchSubmit} className="relative">

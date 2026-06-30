@@ -20,12 +20,6 @@ export default function DiscoverPage() {
   const [results, setResults] = useState<any[]>([]);
   const [loadingResults, setLoadingResults] = useState(false);
 
-  // useEffect(() => {
-  //   if (!isLoading && !isAuthenticated) {
-  //     router.push('/login');
-  //   }
-  // }, [isLoading, isAuthenticated, router]);
-
   useEffect(() => {
     async function fetchDiscover() {
       setLoadingResults(true);
@@ -68,7 +62,7 @@ export default function DiscoverPage() {
       
       {/* Hero Section */}
       <div className={`relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-slate-900 via-${accentColor}-950/10 to-slate-900`}>
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('/background.jpeg')] opacity-[0.95] bg-cover mix-blend-overlay" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
           <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-${accentColor}-500/10 border border-${accentColor}-500/20 text-${accentColor}-400 text-sm font-medium mb-6 animate-fade-in-up`}>
