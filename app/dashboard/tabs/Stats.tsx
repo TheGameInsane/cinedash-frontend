@@ -281,7 +281,7 @@ export default function Stats() {
                 width={pieWidth}
                 height={pieHeight}
                 slotProps={{
-                  legend: pieWidth < 300 ? { hidden: true } : { sx: { color: "gray" } },
+                  legend: pieWidth < 300 ? { sx: {display: "none"} } : { sx: { color: "gray" } },
                 }}
               />
             </div>
@@ -318,7 +318,7 @@ export default function Stats() {
                 width={pieWidth}
                 height={pieHeight}
                 slotProps={{
-                  legend: pieWidth < 300 ? { hidden: true } : { sx: { color: "gray" } },
+                  legend: pieWidth < 300 ? { sx: {display: "none"} } : { sx: { color: "gray" } },
                 }}
               />
             </div>

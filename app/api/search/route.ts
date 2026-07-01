@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         Authorization: `Bearer ${TMDB_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 3*24*60*60 },
+      next: { revalidate: 1*24*60*60 },
     });
 
     if (!response.ok) {

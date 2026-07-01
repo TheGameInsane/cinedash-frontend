@@ -118,6 +118,7 @@ export default function Navbar() {
       : undefined;
     addToRecentSearches(query.trim(), imageUrl);
     setShowDropdown(false);
+    setShowMobileMenu(false);
     setQuery('');
     if (type === 'movie') router.push(`/movie/${result.id}`);
     else if (type === 'tv') router.push(`/tv/${result.id}`);

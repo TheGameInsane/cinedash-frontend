@@ -94,7 +94,7 @@ export default function SearchDropdown({
                     />
                   </div>
                 ) : (
-                  <div className="w-9 h-9 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0">
+                  <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center flex-shrink-0">
                     <Clock className="h-3.5 w-3.5 text-slate-500" />
                   </div>
                 )}
@@ -152,7 +152,7 @@ export default function SearchDropdown({
                         />
                       </div>
                     ) : (
-                      <div className={`flex items-center justify-center flex-shrink-0 bg-slate-800/80 ${isPerson ? 'w-10 h-10 rounded-full' : 'w-10 h-14 rounded-lg'}`}>
+                      <div className={`flex items-center justify-center flex-shrink-0 bg-slate-800 ${isPerson ? 'w-10 h-10 rounded-full' : 'w-10 h-14 rounded-lg'}`}>
                         {isPerson ? (
                           <User className="h-4 w-4 text-slate-600" />
                         ) : (

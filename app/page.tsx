@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Film, Sparkles, BarChart2, Clock, Star, TrendingUp, ArrowRight, Play, ChevronRight } from 'lucide-react';
-import Navbar from '@/components/Navbar';
 import { useAuth } from '@/lib/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';

@@ -18,7 +18,7 @@ export async function GET(
         Authorization: `Bearer ${TMDB_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 7*24*60*60 },
+      next: { revalidate: 1*24*60*60 },
     });
 
     if (!response.ok) {
